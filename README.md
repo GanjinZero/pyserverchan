@@ -7,7 +7,7 @@ pip install pyserverchan
 ```
 
 # Getting started
-You should go to [Server酱](sc.ftqq.com/3.version) get a SCKEY and bind WeChat. Your URL will be like 'https://sc.ftqq.com/[SCKEY].send '. You can use following functions to send text, picture, markdown files.
+You should go to [Server酱](http://sc.ftqq.com/3.version) get a SCKEY and bind WeChat. Your URL will be like 'https://sc.ftqq.com/[SCKEY].send '. You can use following functions to send text, picture, markdown files.
 ```Python
 svc = ServerChan(user_URL)
 svc.output_to_weixin("ATestMessage.")
