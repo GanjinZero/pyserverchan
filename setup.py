@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="pyserverchan",
-    version="0.0.1",
+    version="0.0.2",
     author="GanjinZero",
     author_email="yuanz17@mails.tsinghua.edu.cn",
     description="Server-chan for python.",
