@@ -24,18 +24,17 @@ class ServerChan(object):
 
     def output_to_weixin_picture(self, picture, title='Picture'):
         # picture: A network address or a local address
-        # may only support png
-        # local picture cannot be sent now
-        # max size 7725byte?
+        # local picture max size 7kb
         if check_is_web(picture):
             content = '![' + title + '](' + picture + ')'
         else:
             with open(picture, 'rb') as pic:
+                picture_type = picture.split(".")[-1]
                 base64pic = base64.b64encode(pic.read())
                 base64str = str(base64pic)[2:-1]
                 content = '![' + title + '][link1]' + os.linesep + os.linesep
-                content += '[link1]:data:image/png;base64,' + base64str
-        #requests.get(self.url, params={'text':title, 'desp':content})
+                content += '[link1]:data:image/' + picture_type + ';base64,' + base64str
+        requests.get(self.url, params={'text':title, 'desp':content})
         return
 
     def output_to_weixin_markdown(self, markdown_file, title='MarkdownFile'):
@@ -44,6 +43,3 @@ class ServerChan(object):
             content = md.read()
         requests.get(self.url, params={'text':title, 'desp':content})
         return
-
-if __name__ == "__main__":
-    svc.output_to_weixin_picture("C:\\Users\\GanjinZero\\Pictures\\saber.png")
