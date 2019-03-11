@@ -7,6 +7,7 @@ import requests
 import base64
 import os
 
+
 def check_is_web(string):
     check_list = ['www', 'com', 'net']
     for checker in check_list:
@@ -14,13 +15,27 @@ def check_is_web(string):
             return True
     return False
 
+
 class ServerChan(object):
-    def __init__(self, url):
-        self.url = url
+    def __init__(self, url=""):
+        path = os.path.expanduser("~") + "/.pyserverchan"
+        if url == "":
+            if os.path.isfile(path):
+                with open(path, 'r') as f:
+                    self.url = f.read()
+            else:
+                print(".pyserverchan doesn\'t exist, please initialize with a url.")
+        else:
+            self.url = url
+            if not os.path.isfile(path):
+                os.system("touch ~/.pyserverchan")
+            with open(path, 'w') as f:
+                f.write(self.url)
+
 
     def output_to_weixin(self, title, content=''):
         requests.get(self.url, params={'text':title, 'desp':content})
-        return
+
 
     def output_to_weixin_picture(self, picture, title='Picture'):
         # picture: A network address or a local address
@@ -35,11 +50,11 @@ class ServerChan(object):
                 content = '![' + title + '][link1]' + os.linesep + os.linesep
                 content += '[link1]:data:image/' + picture_type + ';base64,' + base64str
         requests.get(self.url, params={'text':title, 'desp':content})
-        return
+
 
     def output_to_weixin_markdown(self, markdown_file, title='MarkdownFile'):
         # markdwon_file: A local address
         with open(markdown_file, 'r', encoding='utf-8') as md:
             content = md.read()
         requests.get(self.url, params={'text':title, 'desp':content})
-        return
+
